@@ -1,94 +1,177 @@
 
-# Chess Analysis Using AI Methodology
-## SMAI Project – CS7.403b | Team 32
+# ♟️ Chess Position Strength Classification (AI + Graph-Based Analysis)
 
-# Model Training and Testing Notebook
+## 🚀 Overview
+This project builds a machine learning system to classify chess positions into **Strong, Neutral, or Weak** using **Stockfish engine evaluations** and **graph-based feature engineering**.
 
-This repository contains a Jupyter Notebook (`model-trainig-testing.ipynb`) that demonstrates a complete pipeline for training and testing a machine learning model. The notebook includes data preprocessing, model training, evaluation, and visualization of results.
+Unlike traditional approaches that rely only on board state, this project models chess positions as **networks**, capturing piece interactions, mobility, and structural relationships.
 
 ---
 
-## 🛠️ Requirements
+## 🎯 Problem Statement
+Chess engines like Stockfish provide strong evaluations but lack **interpretability** for human players.
 
-Make sure the following are installed:
+This project aims to:
+- Convert chess positions into **interpretable features**
+- Use ML to classify position strength
+- Provide insights into **why a position is strong or weak**
+
+---
+
+## 🧠 Methodology
+
+### 🔹 Pipeline Overview
+- Parse large-scale PGN datasets (Lichess)
+- Evaluate positions using **Stockfish**
+- Convert positions into **graph representations**
+- Extract structural + domain features
+- Train ML model for classification
+
+📌 Full pipeline explained in: :contentReference[oaicite:0]{index=0}
+
+---
+
+## ♟️ Example Chess Position
+
+![Chess Board](assets/chess_board.png)
+
+---
+
+## 🔗 Graph-Based Representation
+
+### 🔹 Mobility Graph
+Represents all legal moves available from a position.
+
+![Mobility Graph](assets/mobility_graph.png)
+
+---
+
+### 🔹 Position Graph
+Combines mobility + support relationships to capture full board dynamics.
+
+![Position Graph](assets/position_graph.png)
+
+---
+
+## 📊 Features Extracted
+- 20+ engineered features including:
+  - Piece mobility
+  - Central control
+  - King safety
+  - Pawn structure
+  - Graph metrics (degree, clustering, centrality)
+
+---
+
+## 🤖 Model
+
+- Model: **Random Forest Classifier**
+- Hyperparameter tuning: **GridSearchCV**
+- Feature sets:
+  - Graph-based (mobility, connectivity)
+  - Domain-based (material balance, structure)
+
+---
+
+## 📈 Results
+
+- ✅ Accuracy: **74%**
+- F1 Scores:
+  - Strong: 0.83  
+  - Neutral: 0.73  
+  - Weak: 0.68  
+
+---
+
+## 📉 Key Insights
+
+- Graph-only features → ~50% accuracy  
+- Adding domain knowledge → **74% accuracy**  
+- Important factors:
+  - Pawn structure
+  - Piece coordination
+  - Mobility
+
+---
+
+## 🧰 Tech Stack
+
+- Python  
+- Stockfish  
+- NetworkX  
+- scikit-learn  
+- pandas, numpy  
+- matplotlib, seaborn  
+- Jupyter Notebook  
+
+---
+
+## 📁 Project Structure
+
+```
+
+.
+├── code
+│   ├── Data_generator.ipynb
+│   └── model-training-testing.ipynb
+├── dataset
+│   ├── combined_dataset_feature.csv
+│   └── graph_based_Chess_Features.csv
+├── Feature_Documentation.markdown
+├── model_weights
+│   └── model_weights_compressed.zip
+├── SMAI_Project_Overview.pdf
+└── readme.md
+
+````
+
+---
+
+## ▶️ How to Run
 
 ```bash
 pip install numpy pandas matplotlib seaborn scikit-learn
+jupyter notebook
+````
+
+Run:
+
+```
+code/model-training-testing.ipynb
 ```
 
 ---
 
-## 🚀 How to Run the Notebook
+## 📄 Documentation
 
-1. Clone this repository or download the `.ipynb` file.
-
-2. Launch Jupyter Notebook:
-
-   ```bash
-   jupyter notebook
-   ```
-
-3. Open `model-trainig-testing.ipynb`.
-
-4. **Adjust the dataset path** in the notebook if your dataset file is not in the same directory.
-
-   ### 📌 Modify the file path:
-
-   Locate the line where the dataset is loaded, for example:
-
-   ```python
-   df = pd.read_csv("path/to/your/dataset.csv")
-   ```
-
-   Update `"path/to/your/dataset.csv"` to reflect the correct path to your dataset file.
-
-5. Run the notebook cells sequentially using **Shift + Enter** or from the menu: **Cell > Run All**.
+* Feature details: `Feature_Documentation.markdown`
+* Full report: 
 
 ---
 
-## 🧠 Understanding the Notebook
+## 🔥 Key Highlights
 
-### 1. **Data Loading**
-
-* Loads a dataset (CSV format) using pandas.
-* Displays the dataset’s first few rows and basic info.
-
-### 2. **Data Preprocessing**
-
-* Missing values handled.
-* Features may be normalized or encoded.
-* Dataset is split into training and test sets.
-
-### 3. **Model Training**
-
-* A machine learning model is trained using training data (`X_train`, `y_train`).
-
-### 4. **Evaluation**
-
-* Predictions are made on the test set (`X_test`).
-* Evaluation metrics are calculated: accuracy, precision, recall, F1-score.
-
-### 5. **Visualization**
-
-* Confusion matrix and performance metrics plotted using `matplotlib` or `seaborn`.
+* Combines **AI + Graph Theory + Chess Engine**
+* Works on **large-scale real game data**
+* Provides **interpretable chess insights**
+* Uses **network-based representation**
 
 ---
 
-## 📊 Interpreting Results
+## ⚠️ Limitations
 
-* **Accuracy**: Overall prediction correctness.
-* **Precision**: Correctness of positive predictions.
-* **Recall**: Coverage of actual positives.
-* **F1 Score**: Balance between precision and recall.
-* **Confusion Matrix**: Visual layout of classification performance.
+* Relies on Stockfish evaluations
+* Neutral vs weak classification can be improved
+* Threshold-based labeling
 
 ---
 
-## 📁 Output
+## 🚀 Future Work
 
-* Printed classification metrics.
-* Confusion matrix and other plots.
-* Optionally, saved model or CSV with predictions (if implemented in the notebook).
+* Graph Neural Networks (GNNs)
+* Real-time chess evaluation API
+* Multi-engine evaluation
+* Explainable AI (SHAP, LIME)
 
 ---
 
